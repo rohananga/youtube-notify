@@ -3,11 +3,13 @@ from datetime import datetime, date, time, timedelta
 # what do the date & time apis provide in comparison to datetime?
 # timedelta is for smart subtraction of dates
 
+inputUsername = input("Enter channel username: ");
+inputInterest = input("Enter Interest Name: ");
 api_key = "AIzaSyA2iqQC2e8TgjVReDnQ9oGtFitVMlcjB3A"
 youtube = build('youtube', 'v3', developerKey = api_key)
 
 # Later on we will have a user input feature for username, and maybe search for username based on title (e.g. Star Wars -> username = StarWars)
-channel = youtube.channels().list(part = 'id', forUsername = 'marvel').execute()
+channel = youtube.channels().list(part = 'id', forUsername = inputUsername).execute()
 channelId = channel['items'][0]['id']
 
 res = youtube.channels().list(id = channelId, part = 'contentDetails').execute()
@@ -28,10 +30,10 @@ for video in videos:
     stamp = video['snippet']['publishedAt']
     stampDay = int(stamp[stamp.rindex('-')+1:stamp.index('T')])
     # print(stampDay)
-    if stampDay >= min_day and video['snippet']['title'].find('Captain America') != -1:
-    	#print(video['snippet']['title'])
-    	video_id = video['snippet']['resourceId']['videoId'] #obain video Id
-    	url = 'www.youtube.com/watch?v=' + video_id #assemble video url
-    	email_vids.append(url) # add to list of videos
+    if stampDay >= min_day and video['snippet']['title'].find(inputInterest) != -1:
+        #print(video['snippet']['title'])
+        video_id = video['snippet']['resourceId']['videoId'] #obain video Id
+        url = 'www.youtube.com/watch?v=' + video_id #assemble video url
+        email_vids.append(url) # add to list of videos
     if stampDay < min_day:
-    	break
+        break
