@@ -10,11 +10,12 @@ youtube = build('youtube', 'v3', developerKey = api_key)
 
 # Later on we will have a user input feature for username, and maybe search for username based on title (e.g. Star Wars -> username = StarWars)
 channel = youtube.channels().list(part = 'id', forUsername = inputUsername).execute()
-channelId = channel['items'][0]['id']
+channel_id = channel['items'][0]['id']
 
-res = youtube.channels().list(id = channelId, part = 'contentDetails').execute()
+res = youtube.channels().list(id = channel_id, part = 'contentDetails').execute()
 uploadsId = res['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-res = youtube.playlistItems().list(playlistId = uploadsId, part = 'snippet', maxResults = 50).execute()
+res = youtube.search().list(part='snippet', channelId = channel_id, maxResults = '50', order = 'date',
+type = 'video').execute()
 
 videos = res['items']
 curr_time = datetime.now()
