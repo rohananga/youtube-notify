@@ -4,9 +4,9 @@ function sendEmail() {
 	Email.send({
 	Host: "smtp.gmail.com",
 	Username : "amarmuju@terpmail.umd.edu",
-	Password : "<>",
+	Password : "",
 	To : 'hummerrocket@gmail.com',
-	From : "",
+	From : "amarmuju@terpmail.umd.edu",
 	Subject : "<email subject>",
 	Body : "<email body>",
 	}).then(
@@ -14,4 +14,4 @@ function sendEmail() {
 	);
 }
 
-sendEmail();
+setTimeout(function(){ sendEmail();}, 10000);
