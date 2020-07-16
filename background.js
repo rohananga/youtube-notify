@@ -1,16 +1,15 @@
 //background.js
 
-function getVideo() {
+function getChannel(username) {
 	$.ajax({
 	  type: 'GET',
 	  url: 'https://www.googleapis.com/youtube/v3/search',
 	  data: {
 		  key: 'AIzaSyAHUITXF9oo2Ed24HO1IrDRtYqNLv15_b8',
-		  q: "cats",
+		  q: username,
 		  part: 'snippet',
-		  maxResults: 1,
-		  type: 'video',
-		  videoEmbeddable: true,
+		  maxResults: 5,
+		  type: 'channel',
 	  },
 	  success: function(data){
 		  alert("Success!");
@@ -33,4 +32,4 @@ function sendEmail() {
 	);
 }
 
-sendEmail();
+getChannel("Netflix");
