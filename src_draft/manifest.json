@@ -1,0 +1,12 @@
+{
+    "name": "Youtube-Notify",
+    "version": "1.0",
+    "description": "Alerts you whenever a new trailer or music video comes out!",
+    "permissions": ["storage"],
+    "background": {
+        "scripts": ["background.js"],
+        "page": "background.html",
+        "persistent": false
+    },
+    "manifest_version": 2
+  }
