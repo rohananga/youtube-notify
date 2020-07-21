@@ -3,6 +3,9 @@
     "version": "1.0",
     "description": "Alerts you whenever a new trailer or music video comes out!",
     "permissions": ["storage"],
+    "page_action": {
+        "default_popup": "homepage.html"
+    },
     "background": {
         "page": "background.html",
         "persistent": false
