@@ -18,4 +18,4 @@ function getChannel(username) {
 	});
   }
 
-  getChannel("Netflix");
+  //getChannel("Netflix");
