@@ -11,6 +11,10 @@
                 min-width:480px;
                 min-height:400px;
                 margin: 50px 20px;
+                overflow: scroll;
+            }
+            button {
+              margin-left: 10px;
             }
         </style>
         <!-- Required meta tags -->
@@ -37,6 +41,14 @@
             <button style="margin-left:10px" type="submit" class="btn btn-primary mb-2">Edit</button>
             <button style="margin-left:10px" type="reset" class="btn btn-primary mb-2" hidden>Cancel</button>
           </form>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse" aria-expanded="false" aria-controls="channelCollapse">
+            View Your Channels
+          </button>
+          <div class="collapse" id="channelCollapse">
+            <div class="card card-body">
+              Example text here
+            </div>
+          </div>
         </div>
       </body>
     </html>
