@@ -3,8 +3,14 @@ from datetime import datetime, date, time, timedelta
 # what do the date & time apis provide in comparison to datetime?
 # timedelta is for smart subtraction of dates
 
+trailer_keywords = ["trailer", "teaser", "first look"] #make sure to ignore case
+sportsgame_keywords = ["highlights", "recap"]
+genList = sportsgame_keywords
 inputUsername = input("Enter channel username: ");
-inputInterest = input("Enter Interest Name: ");
+inputInterest = input("Would you like notifications about trailers or sports recaps? Enter T or S accordingly.") #change this to give options (checkboxes or something similar)
+
+    if inputInterest = 'T'
+        genList = trailer_keywords
 api_key = "AIzaSyA2iqQC2e8TgjVReDnQ9oGtFitVMlcjB3A"
 youtube = build('youtube', 'v3', developerKey = api_key)
 
@@ -31,9 +37,10 @@ for video in videos:
     stamp = video['snippet']['publishedAt']
     stampDay = int(stamp[stamp.rindex('-')+1:stamp.index('T')])
     # print(stampDay)
+    
     if stampDay >= min_day and video['snippet']['title'].find(inputInterest) != -1:
         #print(video['snippet']['title'])
-        video_id = video['snippet']['resourceId']['videoId'] #obain video Id
+        video_id = video['videoId'] #obain video Id
         url = 'www.youtube.com/watch?v=' + video_id #assemble video url
         email_vids.append(url) # add to list of videos
     if stampDay < min_day:
