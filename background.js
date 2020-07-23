@@ -27,7 +27,13 @@ function getLatestVideoTimes(channelID) {
 			order: 'date',
 		},
 		success: function(data){
-			alert(decodeHTMLEntities(data.items[0].snippet.title));
+			var time = decodeHTMLEntities(data.items[0].snippet.publishedAt);
+			var date = new Date(time);
+			var currentDate = new Date();
+			var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
+			if (secondsDifference < 60) {
+
+			}
 		},
 		error: function(response){
 			console.log("Request Failed");
@@ -53,4 +59,17 @@ function decodeHTMLEntities(text) {
 	return textArea.value;
   }
 
+var oldTime = new Date();
 getLatestVideoTimes("UCshoKvlZGZ20rVgazZp5vnQ");
+var newTime = new Date();
+//alert(Math.abs(oldTime.getTime() - newTime.getTime()) / 1000);
+
+/*x = 1;
+while (x == 1) {
+	var date = new Date();
+	if (date.getMinutes() >= 19) {
+		alert(date.getMinutes());
+		break;
+	}
+	//x++;
+}*/

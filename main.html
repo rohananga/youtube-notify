@@ -8,8 +8,9 @@
       <script src="main.js"></script>
         <style>
             body {
-                min-width:320px;
+                min-width:480px;
                 min-height:400px;
+                margin: 50px 20px;
             }
         </style>
         <!-- Required meta tags -->
@@ -19,8 +20,23 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <br>
-
         <h3 style="text-align:center">Youtube Notify</h3>
-        <img src="https://yt3.ggpht.com/-9El0rLwfX5E/AAAAAAAAAAI/AAAAAAAAAAA/iVYt84ud62o/s88-c-k-no-mo-rj-c0xffffff/photo.jpg" alt="Netflix" width="40" height="40">
+        <!--<img src="https://yt3.ggpht.com/-9El0rLwfX5E/AAAAAAAAAAI/AAAAAAAAAAA/iVYt84ud62o/s88-c-k-no-mo-rj-c0xffffff/photo.jpg" alt="Netflix" width="40" height="40">-->
       </head>
+      <body> 
+        <div class = "container">
+          <form class="form-inline">
+            <div class="form-group mb-2">
+              <label for="emailLabel" class="sr-only">Email</label>
+              <input type="text" readonly class="form-control-plaintext" id="emailLabel" value="Email" size = "5">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+              <label for = "inputPassword2" class="sr-only">Email</label>
+              <input type="text" class="form-control" id="inputPassword2" placeholder="Enter Email Here" readonly>
+            </div>
+            <button style="margin-left:10px" type="submit" class="btn btn-primary mb-2">Edit</button>
+            <button style="margin-left:10px" type="reset" class="btn btn-primary mb-2" hidden>Cancel</button>
+          </form>
+        </div>
+      </body>
     </html>

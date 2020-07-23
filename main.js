@@ -24,6 +24,6 @@ async function getChannel(username) {
   var x = 3;
   (async () => {
 	const result = await getChannel("Netflix");
-	//alert(result.items[1].snippet.title);
+	//alert(result.items[0].snippet.title);
 	
 })()
