@@ -5,6 +5,10 @@
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
       <script src="main.js"></script>
         <style>
             body {
@@ -41,12 +45,20 @@
             <button style="margin-left:10px" type="submit" class="btn btn-primary mb-2">Edit</button>
             <button style="margin-left:10px" type="reset" class="btn btn-primary mb-2" hidden>Cancel</button>
           </form>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse" aria-expanded="false" aria-controls="channelCollapse">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse" aria-expanded="false" aria-controls="channel">
             View Your Channels
           </button>
           <div class="collapse" id="channelCollapse">
             <div class="card card-body">
-              Example text here
+              This is your list of channels. 
+            </div>
+          </div>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse2" aria-expanded="false" aria-controls="channel">
+            Search for Channels
+          </button>
+          <div class="collapse" id="channelCollapse2">
+            <div class="card card-body">
+              This is your list of channels. 
             </div>
           </div>
         </div>
