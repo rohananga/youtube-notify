@@ -21,9 +21,33 @@ async function getChannel(username) {
 	}
   }
 
+  document.addEventListener('DOMContentLoaded', function() {
+    var link = document.getElementById('editButton');
+	
+	
+	link.addEventListener('click', function() {
+		var editButton = document.getElementById('editButton');
+		var cancelButton = document.getElementById('cancelButton');
+		var emailBox = document.getElementById('inputEmail');
+		if (editButton.innerHTML == "Edit") {
+			editButton.innerHTML = "Save";
+			if (emailBox.readOnly) {
+				emailBox.readOnly = false;
+				cancelButton.hidden = false;
+			}
+		} else {
+			editButton.innerHTML = "Edit";
+			if (!emailBox.readOnly) {
+				emailBox.placeholder = emailBox.value;
+				emailBox.readOnly = true;
+				cancelButton.hidden = true;
+			}
+		}
+    });
+});
+
   var x = 3;
   (async () => {
 	const result = await getChannel("Netflix");
 	//alert(result.items[0].snippet.title);
-	
 })()
