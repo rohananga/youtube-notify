@@ -12,6 +12,7 @@ chrome.runtime.onInstalled.addListener(function() {
 			  actions: [new chrome.declarativeContent.ShowPageAction()]
 		}]);
 	  });
+	  chrome.storage.sync.set({"email": "Enter Email here"});
   });
 
 function getLatestVideoTimes(channelID) {
@@ -60,7 +61,7 @@ function decodeHTMLEntities(text) {
   }
 
 var oldTime = new Date();
-getLatestVideoTimes("UCshoKvlZGZ20rVgazZp5vnQ");
+//getLatestVideoTimes("UCshoKvlZGZ20rVgazZp5vnQ");
 var newTime = new Date();
 //alert(Math.abs(oldTime.getTime() - newTime.getTime()) / 1000);
 
