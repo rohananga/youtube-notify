@@ -63,6 +63,20 @@ async function getChannel(username) {
     });
 });
 
+function addElement(parentId, elementTag, elementId, html) {
+    // Adds an element to the document
+    var p = document.getElementById(parentId);
+    var newElement = document.createElement(elementTag);
+    newElement.setAttribute('id', elementId);
+    newElement.innerHTML = html;
+    p.appendChild(newElement);
+}
+
+function removeElement(elementId) {
+    // Removes an element from the document
+    var element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
+}
  /* var x = 3;
   (async () => {
 	const result = await getChannel("Netflix");
@@ -70,10 +84,7 @@ async function getChannel(username) {
 })()*/
 
 chrome.storage.sync.get("email", function(result) {
-	if (document.getElementById('inputEmail').value != null && document.getElementById('inputEmail').value != "") {
-		document.getElementById('inputEmail').placeholder = result.email;
-	} else {
-		document.getElementById('inputEmail').placeholder = "Enter Email Here";
-	}
-	document.getElementById('inputEmail').value = result.email;
+	var inputEmail = document.getElementById('inputEmail');
+	inputEmail.placeholder = (inputEmail.value != null && inputEmail.value != "") ? result.email : "Enter Email Here";
+	inputEmail.value = result.email;
 });
