@@ -20,6 +20,7 @@
             button {
               margin-left: 10px;
             }
+
         </style>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -49,12 +50,23 @@
             View Your Channels
           </button>
           <div class="collapse" id="channelCollapse">
-            <div class="card card-body" id = "Channel1" onclick = "myFunction(document.getElementById('Channel1'))">
+            <div class="card card-body" id = "Channel1" onclick = "myFunction()">
               Netflix
+
+          <script>
+            function myFunction() {
+              document.write("<button class="btn btn-primary" type="button" data-target="#channelCollapse" aria-expanded="false" aria-controls="channel"> Remove");
+              //document.getElementById(a).style.color = "red";
+            }
+          </script>
             </div>
             <div class="card card-body" id = "Channel2">
               Star Wars 
             </div>
+
+                     <button class="btn btn-primary" type="button" aria-expanded="false" aria-controls="channel">
+            Remove
+          </button>
           </div>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse2" aria-expanded="false" aria-controls="channel">
             Search for Channels
@@ -65,11 +77,7 @@
             </div>
           </div>
 
-          <script>
-            function myFunction(a) {
-              a.color = "text-white";
-            }
-          </script>
+ 
         </div>
           
 
