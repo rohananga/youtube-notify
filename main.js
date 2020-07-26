@@ -34,27 +34,73 @@ async function getChannel(username) {
 	});
 	
 	link.addEventListener("click", function2() {
+  /*chrome.runtime.onStartup.addListener(function() {
+	chrome.storage.sync.get("email", function(result) {
+		document.getElementById('inputEmail').placeholder = result;
+		alert(result);
+	});
+  })*/
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var edit = document.getElementById('editButton');
+	
+	
+	edit.addEventListener('click', function() {
 		var editButton = document.getElementById('editButton');
 		var cancelButton = document.getElementById('cancelButton');
 		var emailBox = document.getElementById('inputEmail');
 		if (editButton.innerHTML == "Edit") {
 			editButton.innerHTML = "Save";
 			if (emailBox.readOnly) {
+				emailBox.placeholder = "Enter Email Here";
+				if (emailBox.value == null || emailBox.value.length < 1) {
+					chrome.storage.sync.set({"email": ""});
+				}
 				emailBox.readOnly = false;
 				cancelButton.hidden = false;
 			}
 		} else {
 			editButton.innerHTML = "Edit";
 			if (!emailBox.readOnly) {
-				emailBox.placeholder = emailBox.value;
+				if (emailBox.value != null && emailBox.value.length > 0) {
+					emailBox.value = emailBox.value;
+					chrome.storage.sync.set({"email": emailBox.value});
+				} else {
+					emailBox.value = "";
+					chrome.storage.sync.set({"email": ""});
+				}
 				emailBox.readOnly = true;
 				cancelButton.hidden = true;
 			}
 		}
 	});
 });
+<<<<<<< HEAD
   var x = 3;
+
+function addElement(parentId, elementTag, elementId, html) {
+    // Adds an element to the document
+    var p = document.getElementById(parentId);
+    var newElement = document.createElement(elementTag);
+    newElement.setAttribute('id', elementId);
+    newElement.innerHTML = html;
+    p.appendChild(newElement);
+}
+
+function removeElement(elementId) {
+    // Removes an element from the document
+    var element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
+}
+ /* var x = 3;
+>>>>>>> d38cffece63d60777f903efbfe4e0f1fb1c17000
   (async () => {
 	const result = await getChannel("Netflix");
 	//alert(result.items[0].snippet.title);
-})()
+})()*/
+
+chrome.storage.sync.get("email", function(result) {
+	var inputEmail = document.getElementById('inputEmail');
+	inputEmail.placeholder = (inputEmail.value != null && inputEmail.value != "") ? result.email : "Enter Email Here";
+	inputEmail.value = result.email;
+});
