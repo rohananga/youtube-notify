@@ -1,0 +1,28 @@
+{
+    "name": "Youtube-Notify",
+    "version": "1.0",
+    "description": "Alerts you whenever a new trailer or music video comes out!",
+    "permissions": ["declarativeContent", "storage"],
+    "page_action": {
+        "default_popup": "main.html",
+        "default_icon": {
+            "16": "images/get_started16.png",
+            "32": "images/get_started32.png",
+            "48": "images/get_started48.png",
+            "128": "images/get_started128.png"
+          }
+    },
+    "icons": {
+        "16": "images/get_started16.png",
+        "32": "images/get_started32.png",
+        "48": "images/get_started48.png",
+        "128": "images/get_started128.png"
+      },
+    "background": {
+        "page": "background.html",
+        "persistent": false
+    },
+    "manifest_version": 2,
+    "content_security_policy": "script-src 'self' https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js https://smtpjs.com/v3/smtp.js https://code.jquery.com/jquery-3.4.1.min.js; object-src 'self'"
+
+  }

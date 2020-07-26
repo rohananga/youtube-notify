@@ -18,7 +18,7 @@ def gen_message():
 mail = smtplib.SMTP('smtp.gmail.com',587) #standard Google port
 mail.ehlo() #
 mail.starttls() #
-mail.login('rohankms@gmail.com','harry778')
+mail.login('rohankms@gmail.com','censor')
 mail.sendmail('rohankms@gmail.com','rohankms@gmail.com',gen_message()) #replace second email with whoever you want receiver to be
 mail.close()
 
