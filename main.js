@@ -21,11 +21,19 @@ async function getChannel(username) {
 	}
   }
 
+
   document.addEventListener('DOMContentLoaded', function() {
     var link = document.getElementById('editButton');
+	var channel1 = document.getElementById('Channel1');
+
+
+	channel1.addEventListener('click', function1(){
+		console.log("Channel click recognized");
+		channel1.style.color = "red";
+		document.write("<button class="btn btn-primary" type="button"> Boi");
+	});
 	
-	
-	link.addEventListener('click', function() {
+	link.addEventListener("click", function2() {
 		var editButton = document.getElementById('editButton');
 		var cancelButton = document.getElementById('cancelButton');
 		var emailBox = document.getElementById('inputEmail');
@@ -43,9 +51,8 @@ async function getChannel(username) {
 				cancelButton.hidden = true;
 			}
 		}
-    });
+	});
 });
-
   var x = 3;
   (async () => {
 	const result = await getChannel("Netflix");
