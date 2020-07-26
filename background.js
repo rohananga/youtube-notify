@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(function() {
 			  actions: [new chrome.declarativeContent.ShowPageAction()]
 		}]);
 	  });
-	  chrome.storage.sync.set({"email": "Enter Email here"});
+	  chrome.storage.sync.set({"email": ""});
   });
 
 function getLatestVideoTimes(channelID) {

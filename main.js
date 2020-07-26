@@ -39,8 +39,9 @@ async function getChannel(username) {
 		if (editButton.innerHTML == "Edit") {
 			editButton.innerHTML = "Save";
 			if (emailBox.readOnly) {
+				emailBox.placeholder = "Enter Email Here";
 				if (emailBox.value == null || emailBox.value.length < 1) {
-					chrome.storage.sync.set({"email": "Enter Email Here"});
+					chrome.storage.sync.set({"email": ""});
 				}
 				emailBox.readOnly = false;
 				cancelButton.hidden = false;
@@ -48,9 +49,12 @@ async function getChannel(username) {
 		} else {
 			editButton.innerHTML = "Edit";
 			if (!emailBox.readOnly) {
-				if (emailBox.value && emailBox.value.length > 0) {
+				if (emailBox.value != null && emailBox.value.length > 0) {
 					emailBox.value = emailBox.value;
 					chrome.storage.sync.set({"email": emailBox.value});
+				} else {
+					emailBox.value = "";
+					chrome.storage.sync.set({"email": ""});
 				}
 				emailBox.readOnly = true;
 				cancelButton.hidden = true;
@@ -66,8 +70,10 @@ async function getChannel(username) {
 })()*/
 
 chrome.storage.sync.get("email", function(result) {
-	if (document.getElementById('inputEmail').value != null && document.getElementById('inputEmail').value != "Enter Email Here") {
+	if (document.getElementById('inputEmail').value != null && document.getElementById('inputEmail').value != "") {
 		document.getElementById('inputEmail').placeholder = result.email;
-		document.getElementById('inputEmail').value = result.email;
+	} else {
+		document.getElementById('inputEmail').placeholder = "Enter Email Here";
 	}
+	document.getElementById('inputEmail').value = result.email;
 });
