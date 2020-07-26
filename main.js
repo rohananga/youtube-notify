@@ -25,15 +25,7 @@ async function getChannel(username) {
   document.addEventListener('DOMContentLoaded', function() {
     var link = document.getElementById('editButton');
 	var channel1 = document.getElementById('Channel1');
-
-
-	channel1.addEventListener('click', function1(){
-		console.log("Channel click recognized");
-		channel1.style.color = "red";
-		document.write("<button class="btn btn-primary" type="button"> Boi");
-	});
-	
-	link.addEventListener("click", function2() {
+  });
   /*chrome.runtime.onStartup.addListener(function() {
 	chrome.storage.sync.get("email", function(result) {
 		document.getElementById('inputEmail').placeholder = result;
@@ -42,8 +34,15 @@ async function getChannel(username) {
   })*/
 
   document.addEventListener('DOMContentLoaded', function() {
-    var edit = document.getElementById('editButton');
-	
+	var edit = document.getElementById('editButton');
+	var channel1 = document.getElementById('Channel1');
+
+
+	channel1.addEventListener('click', function(){
+		console.log("Channel click recognized");
+		channel1.style.color = "red";
+		document.write("<button class=\"btn btn-primary\" type=\"button\"> Boi");
+	});
 	
 	edit.addEventListener('click', function() {
 		var editButton = document.getElementById('editButton');
@@ -74,10 +73,7 @@ async function getChannel(username) {
 			}
 		}
 	});
-});
-<<<<<<< HEAD
-  var x = 3;
-
+  });
 function addElement(parentId, elementTag, elementId, html) {
     // Adds an element to the document
     var p = document.getElementById(parentId);
@@ -92,9 +88,7 @@ function removeElement(elementId) {
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
 }
- /* var x = 3;
->>>>>>> d38cffece63d60777f903efbfe4e0f1fb1c17000
-  (async () => {
+ /* (async () => {
 	const result = await getChannel("Netflix");
 	//alert(result.items[0].snippet.title);
 })()*/
