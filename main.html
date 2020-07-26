@@ -20,6 +20,7 @@
             button {
               margin-left: 10px;
             }
+
         </style>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -40,7 +41,7 @@
             </div>
             <div class="form-group mx-sm-3 mb-2">
               <label for = "inputEmail" class="sr-only">Email</label>
-              <input type="text" class="form-control" id="inputEmail" placeholder="Enter Email Here" readonly>
+              <input type="text" class="form-control" id="inputEmail" placeholder="Enter Email Here" writeonly>
             </div>
             <button style="margin-left:10px" type="button" class="btn btn-primary mb-2" id="editButton">Edit</button>
             <button style="margin-left:10px" type="reset" class="btn btn-primary mb-2" id = "cancelButton" hidden>Cancel</button>
@@ -49,9 +50,23 @@
             View Your Channels
           </button>
           <div class="collapse" id="channelCollapse">
-            <div class="card card-body">
-              This is your list of channels. 
+            <div class="card card-body" id = "Channel1" onclick = "myFunction()">
+              Netflix
+
+          <script>
+            function myFunction() {
+              document.write("<button class="btn btn-primary" type="button" data-target="#channelCollapse" aria-expanded="false" aria-controls="channel"> Remove");
+              //document.getElementById(a).style.color = "red";
+            }
+          </script>
             </div>
+            <div class="card card-body" id = "Channel2">
+              Star Wars 
+            </div>
+
+                     <button class="btn btn-primary" type="button" aria-expanded="false" aria-controls="channel">
+            Remove
+          </button>
           </div>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse2" aria-expanded="false" aria-controls="channel">
             Search for Channels
@@ -61,7 +76,10 @@
               This is your list of channels. 
             </div>
           </div>
+
+ 
         </div>
           
+
       </body>
     </html>
