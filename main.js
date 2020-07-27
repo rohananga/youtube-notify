@@ -35,8 +35,20 @@ async function getChannel(username) {
 
   document.addEventListener('DOMContentLoaded', function() {
 	var edit = document.getElementById('editButton');
+	var cancel = document.getElementById('cancelButton');
 	var channel1 = document.getElementById('Channel1');
 
+
+	cancel.addEventListener('click', function(){
+		cancelButton.hidden = true;
+		document.getElementById('inputEmail').readOnly = true;
+		edit.innerHTML = "Edit";
+		chrome.storage.sync.get("email", function(result) {
+			var inputEmail = document.getElementById('inputEmail');
+			inputEmail.placeholder = (inputEmail.value != null && inputEmail.value != "") ? result.email : "Enter Email Here";
+			inputEmail.value = result.email;
+		});
+	});
 
 	channel1.addEventListener('click', function(){
 		console.log("Channel click recognized");
