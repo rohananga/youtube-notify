@@ -22,47 +22,54 @@ async function getChannels(username) {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-	var edit = document.getElementById('editButton');
-	var cancel = document.getElementById('cancelButton');
-	var channel1 = document.getElementById('Channel1');
-	var search = document.getElementById('searchButton');
-	var clear = document.getElementById('clearButton');
+	var edit = document.getElementById('editButton'),
+		cancel = document.getElementById('cancelButton'),
+		channel1 = document.getElementById('Channel1'),
+		search = document.getElementById('searchButton'),
+		clear = document.getElementById('clearButton');
 
 	search.addEventListener('click', function() {
 		var channelName = document.getElementById('inputSearch').value;
 		(async () => {
 			if (/\S/.test(channelName)) {
-				if (document.getElementById('result#1') != null) {
-					var j;
-					for (j = 1; j < 6; j++) {
+				var i, j, html;
+				for (j = 1; j < 6; j++) {
+					if (document.getElementById('result#' + j) != null) {
 						removeElement('result#' + j);
 					}
 				}
-				result = await getChannels(channelName);
-				//alert(result.items[0].snippet.title);
-				// TODO: create for loop of 10 that displays channel names, descriptions, and images
-				var i;
-				for (i = 0; i < 5; i++) {
-					var html = '<div class="card flex-row flex-wrap">' +
+				var result = await getChannels(channelName), items = result.items;
+				const num = [0, 1, 2, 3, 4];
+				num.forEach(i => {
+					if (items[i] != null) {
+						html = '<div class="card flex-row flex-wrap">' +
 							'<div class="card-header border-0">' +
-							'<img src=' + result.items[i].snippet.thumbnails.default.url + ' alt="" width = "80px" height = "80px">' +
+							'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">' +
 							'</div>' +
 							'<div class="card-block px-2" style ="width: 300px;">' +
-							' <h5 class="card-title">'+result.items[i].snippet.title+'</h5>' +
-							'<p class="card-text"><small>' +result.items[i].snippet.description + '</small></p>' +
+							' <h5 class="card-title">'+items[i].snippet.title+'</h5>' +
+							'<p class="card-text"><small>' +items[i].snippet.description + '</small></p>' +
 							'</div>' +
-							'<button type="button" class="btn btn-primary mb-2" style = "max-height:40px">+</button>' +
+							'<button type="button" class="btn btn-primary mb-2" id="addButton#'+ (i + 1) + '" style = "max-height:40px">+</button>' +
 							'</div>';
-					addElement('results','div','result#' + (i + 1), html);	
-				}
+						addElement('results','div','result#' + (i + 1), html);	
+						document.getElementById('addButton#' + (i + 1)).addEventListener('click', function() {
+							chrome.storage.sync.get('channelIDs', function(result) {
+								result.channelIDs.push(items[i].snippet.channelId);
+								chrome.storage.sync.set({"channelIDs": result.channelIDs});
+							});
+							removeElement('result#' + (i + 1));
+						});
+					}
+				})
 			}
 		})()
 	});
 
 	clear.addEventListener('click', function() {
-		if (document.getElementById('result#1') != null) {
-			var j;
-			for (j = 1; j < 6; j++) {
+		var j;
+		for (j = 1; j < 6; j++) {
+			if (document.getElementById('result#' + j) != null) {
 				removeElement('result#' + j);
 			}
 		}
