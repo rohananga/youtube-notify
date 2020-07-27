@@ -21,22 +21,22 @@ async function getChannel(username) {
 	}
   }
 
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('editButton');
-	var channel1 = document.getElementById('Channel1');
-  });
-  /*chrome.runtime.onStartup.addListener(function() {
-	chrome.storage.sync.get("email", function(result) {
-		document.getElementById('inputEmail').placeholder = result;
-		alert(result);
-	});
-  })*/
-
   document.addEventListener('DOMContentLoaded', function() {
 	var edit = document.getElementById('editButton');
 	var cancel = document.getElementById('cancelButton');
 	var channel1 = document.getElementById('Channel1');
+	var search = document.getElementById('searchButton');
+
+	search.addEventListener('click', function() {
+		var channelName = document.getElementById('inputSearch').value;
+		(async () => {
+			if (/\S/.test(channelName)) {
+				result = await getChannel(channelName);
+				alert(result.items[0].snippet.title);
+				// TODO: create for loop of 10 that displays channel names, descriptions, and images
+			}
+		})()
+	});
 
 
 	cancel.addEventListener('click', function(){
@@ -100,10 +100,19 @@ function removeElement(elementId) {
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
 }
+
+function decodeHTMLEntities(text) {
+	var textArea = document.createElement('textarea');
+	textArea.innerHTML = text;
+	return textArea.value;
+  }
+
  /* (async () => {
 	const result = await getChannel("Netflix");
 	//alert(result.items[0].snippet.title);
 })()*/
+
+
 
 chrome.storage.sync.get("email", function(result) {
 	var inputEmail = document.getElementById('inputEmail');
