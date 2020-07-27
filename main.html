@@ -12,8 +12,8 @@
       <script src="main.js"></script>
         <style>
             body {
-                min-width:480px;
-                min-height:400px;
+                min-width:500px;
+                min-height:350px;
                 margin: 50px 20px;
                 overflow: scroll;
             }
@@ -43,9 +43,10 @@
               <label for = "inputEmail" class="sr-only">Email</label>
               <input type="text" class="form-control" id="inputEmail" placeholder="Enter Email Here" readonly>
             </div>
-            <button style="margin-left:10px" type="button" class="btn btn-primary mb-2" id="editButton">Edit</button>
+            <button type="button" class="btn btn-primary mb-2" id="editButton">Edit</button>
             <button style="margin-left:10px" type="reset" class="btn btn-primary mb-2" id = "cancelButton" hidden>Cancel</button>
           </form>
+          <br>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#channelCollapse" aria-expanded="false" aria-controls="channel">
             View Your Channels
           </button>
@@ -58,14 +59,14 @@
             </div>
           </div>
           <br><br>
-            <br>
           <form class="form-inline">
             <div class="form-group mx-sm-3 mb-2">
               <input type="text" class="form-control" id="inputSearch" placeholder="Search Channels">
             </div>
             <button style="margin-left:10px" type="button" class="btn btn-primary mb-2" id="searchButton">Search</button>
           </form>
-          
+          <div id="results" width = "300px">
+          </div>
         </div>
           
 

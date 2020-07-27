@@ -1,4 +1,4 @@
-async function getChannel(username) {
+async function getChannels(username) {
 	let result;
 
 	try {
@@ -31,9 +31,26 @@ async function getChannel(username) {
 		var channelName = document.getElementById('inputSearch').value;
 		(async () => {
 			if (/\S/.test(channelName)) {
-				result = await getChannel(channelName);
-				alert(result.items[0].snippet.title);
+				result = await getChannels(channelName);
+				//alert(result.items[0].snippet.title);
 				// TODO: create for loop of 10 that displays channel names, descriptions, and images
+				var i;
+				for (i = 0; i < 5; i++) {
+					var html = '<div class="card flex-row flex-wrap">' +
+							'<div class="card-header border-0">' +
+							'<img src=' + result.items[i].snippet.thumbnails.default.url + ' alt="" width = "80px" height = "80px">' +
+							'</div>' +
+							'<div class="card-block px-2" style ="width: 300px;">' +
+							' <h5 class="card-title">'+result.items[i].snippet.title+'</h5>' +
+							'<p class="card-text"><small>' +result.items[i].snippet.description + '</small></p>' +
+							'</div>' +
+							'<button type="button" class="btn btn-primary mb-2" style = "max-height:40px">+</button>' +
+							'</div>';
+					addElement('results','div','example', html);	
+				}		
+				/*for (i = 0; i < 10; i++) {
+					var html;
+				}*/
 			}
 		})()
 	});
