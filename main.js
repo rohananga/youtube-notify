@@ -26,11 +26,18 @@ async function getChannels(username) {
 	var cancel = document.getElementById('cancelButton');
 	var channel1 = document.getElementById('Channel1');
 	var search = document.getElementById('searchButton');
+	var clear = document.getElementById('clearButton');
 
 	search.addEventListener('click', function() {
 		var channelName = document.getElementById('inputSearch').value;
 		(async () => {
 			if (/\S/.test(channelName)) {
+				if (document.getElementById('result#1') != null) {
+					var j;
+					for (j = 1; j < 6; j++) {
+						removeElement('result#' + j);
+					}
+				}
 				result = await getChannels(channelName);
 				//alert(result.items[0].snippet.title);
 				// TODO: create for loop of 10 that displays channel names, descriptions, and images
@@ -46,15 +53,21 @@ async function getChannels(username) {
 							'</div>' +
 							'<button type="button" class="btn btn-primary mb-2" style = "max-height:40px">+</button>' +
 							'</div>';
-					addElement('results','div','example', html);	
-				}		
-				/*for (i = 0; i < 10; i++) {
-					var html;
-				}*/
+					addElement('results','div','result#' + (i + 1), html);	
+				}
 			}
 		})()
 	});
 
+	clear.addEventListener('click', function() {
+		if (document.getElementById('result#1') != null) {
+			var j;
+			for (j = 1; j < 6; j++) {
+				removeElement('result#' + j);
+			}
+		}
+		document.getElementById('inputSearch').value = "";
+	});
 
 	cancel.addEventListener('click', function(){
 		cancelButton.hidden = true;

@@ -15,7 +15,7 @@ chrome.runtime.onInstalled.addListener(function() {
 	  chrome.storage.sync.set({"email": ""});
   });
 
-function getLatestVideoTimes(channelID) {
+function checkLastestVideos(channelID) {
 	$.ajax({
 		type: 'GET',
 		url: 'https://www.googleapis.com/youtube/v3/search',
@@ -32,9 +32,12 @@ function getLatestVideoTimes(channelID) {
 			var date = new Date(time);
 			var currentDate = new Date();
 			var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-			if (secondsDifference < 60) {
+			if (secondsDifference < 60) { // TODO: decide a margin period
 
 			}
+			chrome.storage.sync.get("email", function(result) {
+				sendEmail("Hello World!", result.email);
+			});
 		},
 		error: function(response){
 			console.log("Request Failed");
@@ -42,10 +45,10 @@ function getLatestVideoTimes(channelID) {
 	  });
 }
 
-function sendEmail(body) {
+function sendEmail(body, recepient) {
 	Email.send({
 	SecureToken : "c12b00bb-a381-4628-97ab-07032d1c145e",
-	To : '',
+	To : recepient,
 	From : "myvideocentral2020@gmail.com",
 	Subject : "Test Email",
 	Body : body,
