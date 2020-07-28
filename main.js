@@ -24,7 +24,9 @@ async function getChannels(username) {
   document.addEventListener('DOMContentLoaded', function() {
 	var edit = document.getElementById('editButton'),
 		cancel = document.getElementById('cancelButton'),
-		channel1 = document.getElementById('Channel1'),
+		channel1minus = document.getElementById('minusButton1'),
+		channel2minus = document.getElementById('minusButton2'),
+		channel3minus = document.getElementById('minusButton3'),
 		search = document.getElementById('searchButton'),
 		clear = document.getElementById('clearButton');
 
@@ -87,11 +89,26 @@ async function getChannels(username) {
 		});
 	});
 
-	channel1.addEventListener('click', function(){
-		console.log("Channel click recognized");
-		channel1.style.color = "red";
-		document.write("<button class=\"btn btn-primary\" type=\"button\"> Boi");
+	channel1minus.addEventListener('click', function(){
+		removeChannel('Channel1');
+		//channel1.style.color = "red";
 	});
+
+	channel2minus.addEventListener('click', function(){
+		removeChannel('Channel2');
+		//channel1.style.color = "red";
+	});
+
+	channel3minus.addEventListener('click', function(){
+		removeChannel('Channel3');
+		//channel1.style.color = "red";
+	});
+
+	function removeChannel(channelId)
+	{
+		var currCard = document.getElementById(channelId);
+		currCard.style.display = 'none';
+	}
 	
 	edit.addEventListener('click', function() {
 		var editButton = document.getElementById('editButton');
