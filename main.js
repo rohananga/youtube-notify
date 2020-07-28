@@ -40,7 +40,7 @@ async function getChannels(username) {
 						removeElement('result#' + j);
 					}
 				}
-				var result = await getChannels(channelName), items = result.items;
+				var result = await getChannels(channelName), items = result.items; //what does await do?
 				var newRowHtml, rowParaHtml;
 				const num = [0, 1, 2, 3, 4];
 				num.forEach(i => {
@@ -57,14 +57,14 @@ async function getChannels(username) {
 							'</div>';
 						addElement('results','div','result#' + (i + 1), html);	
 						document.getElementById('addButton#' + (i + 1)).addEventListener('click', function() {
-							newRowHtml =
-							' <div class="card card-body container-fluid" id = "Channel"+items[i].snippet.channelId><div class = "row" id = "rowChannel"+i><button type="button" class="btn btn-primary mb-2" id="minusButton3" style="margin:5px;">-</button></div></div><p style="font-size:25px" id= "para_channel"+items[i].snippet.channelId></p>';
-							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newRowHtml);
+							newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button> <p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
+							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
 							//addElement('Channel'+items[i].snippet.channelId,'p','channelTitle'+ items[i].snippet.channelId,rowParaHtml);
 							var currCard = document.getElementById('channel#'+items[i].snippet.channelId);
 							//var currTitle = document.getElementById('rowChannel'+i);
-							currCard.style.display = 'block';
-							document.getElementById('para_channel'+items[i].snippet.channelId).innerHTML = ""+items[i].snippet.title;
+							//currCard.style.display = 'block';
+							//currTitle.style.display = 'block';
+							//document.getElementById('para_channel'+items[i].snippet.channelId).innerHTML = ""+items[i].snippet.title;
 							//Note to Amar: I also tried using addElement method for the paragraph, adding to element w/ id = "row" + i, same result
 							chrome.storage.sync.get('channelIDs', function(result) {
 								result.channelIDs.push(items[i].snippet.channelId);
