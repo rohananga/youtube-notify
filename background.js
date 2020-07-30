@@ -12,9 +12,9 @@ chrome.runtime.onInstalled.addListener(function() {
 			  actions: [new chrome.declarativeContent.ShowPageAction()]
 		}]);
 	  });
-	  var channelIDArray = [];
+	  var snippetArray = [];
 	  chrome.storage.sync.set({"email": ""});
-	  chrome.storage.sync.set({"channelIDs": channelIDArray});
+	  chrome.storage.sync.set({"snippets": snippetArray});
   });
 
 function checkLastestVideos(channelID) {

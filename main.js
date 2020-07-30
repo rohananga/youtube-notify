@@ -60,15 +60,15 @@ async function getChannels(username) {
 							newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button> <p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
 							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
 							//addElement('Channel'+items[i].snippet.channelId,'p','channelTitle'+ items[i].snippet.channelId,rowParaHtml);
-							var currCard = document.getElementById('channel#'+items[i].snippet.channelId);
+							//var currCard = document.getElementById('channel#'+items[i].snippet.channelId);
 							//var currTitle = document.getElementById('rowChannel'+i);
 							//currCard.style.display = 'block';
 							//currTitle.style.display = 'block';
 							//document.getElementById('para_channel'+items[i].snippet.channelId).innerHTML = ""+items[i].snippet.title;
 							//Note to Amar: I also tried using addElement method for the paragraph, adding to element w/ id = "row" + i, same result
-							chrome.storage.sync.get('channelIDs', function(result) {
-								result.channelIDs.push(items[i].snippet.channelId);
-								chrome.storage.sync.set({"channelIDs": result.channelIDs});
+							chrome.storage.sync.get('snippets', function(result) {
+								result.snippets.push(items[i].snippet);
+								chrome.storage.sync.set({"snippets": result.snippets});
 							});
 							removeElement('result#' + (i + 1));
 						});
@@ -197,4 +197,15 @@ chrome.storage.sync.get("email", function(result) {
 	var inputEmail = document.getElementById('inputEmail');
 	inputEmail.placeholder = (inputEmail.value != null && inputEmail.value != "") ? result.email : "Enter Email Here";
 	inputEmail.value = result.email;
+});
+
+chrome.storage.sync.get("snippets", function(result) {
+	if (result.snippets.length > 0) {
+		var i;
+		var snippet = result.snippets;
+		for (i = 0; i < snippet.length; i++) {
+			var newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+snippet[i].channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button> <p style="font-size:25px">'+snippet[i].title+'</p></div></div>';
+			addElement('channelCollapse','div','channel#'+snippet[i].channelId,newCardHtml);
+		}
+	}
 });
