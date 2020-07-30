@@ -24,7 +24,7 @@ async function getChannels(username) {
   document.addEventListener('DOMContentLoaded', function() {
 	var edit = document.getElementById('editButton'),
 		cancel = document.getElementById('cancelButton'),
-		channel1minus = document.getElementById('minusButton1'),
+		minusButton = document.getElementById('minusButton1'),
 		channel2minus = document.getElementById('minusButton2'),
 		channel3minus = document.getElementById('minusButton3'),
 		search = document.getElementById('searchButton'),
@@ -57,7 +57,7 @@ async function getChannels(username) {
 							'</div>';
 						addElement('results','div','result#' + (i + 1), html);	
 						document.getElementById('addButton#' + (i + 1)).addEventListener('click', function() {
-							newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button> <p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
+							newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
 							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
 							//addElement('Channel'+items[i].snippet.channelId,'p','channelTitle'+ items[i].snippet.channelId,rowParaHtml);
 							var currCard = document.getElementById('channel#'+items[i].snippet.channelId);
@@ -101,8 +101,10 @@ async function getChannels(username) {
 		});
 	});
 
-	channel1minus.addEventListener('click', function(){
-		removeChannel('Channel1');
+	minusButton.addEventListener('click', function(){
+		console.log('it happened');
+		minusButton.parentNode.parentNode.parentNode.removeChild(minusButton.parentNode.parentNode);
+		//removeChannel('Channel1');
 		//channel1.style.color = "red";
 	});
 
