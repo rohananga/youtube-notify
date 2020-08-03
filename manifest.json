@@ -2,7 +2,7 @@
     "name": "Youtube-Notify",
     "version": "1.0",
     "description": "Alerts you whenever a new trailer or music video comes out!",
-    "permissions": ["declarativeContent", "storage"],
+    "permissions": ["declarativeContent", "storage",  "unlimitedStorage"],
     "page_action": {
         "default_popup": "main.html",
         "default_icon": {
