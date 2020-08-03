@@ -72,7 +72,7 @@ async function getChannels(username) {
 							});
 							removeElement('result#' + (i + 1));
 						});
-					}
+					} 
 				})
 			}
 		})()
@@ -99,6 +99,7 @@ async function getChannels(username) {
 			inputEmail.placeholder = (inputEmail.value != null && inputEmail.value != "") ? result.email : "Enter Email Here";
 			inputEmail.value = result.email;
 		});
+		document.getElementById('emailError').hidden = true;
 	});
 
 	minusButton.addEventListener('click', function(){
@@ -139,17 +140,25 @@ async function getChannels(username) {
 				cancelButton.hidden = false;
 			}
 		} else {
-			editButton.innerHTML = "Edit";
-			if (!emailBox.readOnly) {
-				if (emailBox.value != null && emailBox.value.length > 0) {
-					emailBox.value = emailBox.value;
-					chrome.storage.sync.set({"email": emailBox.value});
-				} else {
-					emailBox.value = "";
-					chrome.storage.sync.set({"email": ""});
+			if (emailIsValid(emailBox.value) || emailBox.value.length < 1) {
+				editButton.innerHTML = "Edit";
+				if (!emailBox.readOnly) {
+
+					if (emailBox.value != null && emailBox.value.length > 0) {
+						emailBox.value = emailBox.value;
+						chrome.storage.sync.set({"email": emailBox.value});
+					} else {
+						emailBox.value = "";
+						chrome.storage.sync.set({"email": ""});
+					}
+					emailBox.readOnly = true;
+					cancelButton.hidden = true;
+					document.getElementById('emailError').hidden = true;
 				}
-				emailBox.readOnly = true;
-				cancelButton.hidden = true;
+			} else {
+				document.getElementById('emailError').hidden = false;
+				//var html = '<p class="text-danger">Enter a valid email.</p>'
+				//addElement('emailError', 'div', 'emailErrorMessage', html);
 			}
 		}
 	});
@@ -174,8 +183,11 @@ function decodeHTMLEntities(text) {
 	var textArea = document.createElement('textarea');
 	textArea.innerHTML = text;
 	return textArea.value;
-  }
+}
 
+function emailIsValid (email) {
+return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
  /* (async () => {
 	const result = await getChannel("Netflix");
 	//alert(result.items[0].snippet.title);
