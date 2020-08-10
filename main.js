@@ -206,7 +206,7 @@ chrome.storage.sync.get("snippets", function(result) {
 		var i;
 		var snippet = result.snippets;
 		for (i = 0; i < snippet.length; i++) {
-			var newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+snippet[i].channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button> <p style="font-size:25px">'+snippet[i].title+'</p></div></div>';
+			var newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+snippet[i].channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + snippet[i].thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+snippet[i].title+'</p></div></div>';
 			addElement('channelCollapse','div','channel#'+snippet[i].channelId,newCardHtml);
 		}
 	}
