@@ -102,6 +102,7 @@ async function getChannels(username) {
 		document.getElementById('emailError').hidden = true;
 	});
 
+/*
 	minusButton.addEventListener('click', function(){
 		console.log('it happened');
 		minusButton.parentNode.parentNode.parentNode.removeChild(minusButton.parentNode.parentNode);
@@ -118,7 +119,7 @@ async function getChannels(username) {
 		removeChannel('Channel3');
 		//channel1.style.color = "red";
 	});
-
+*/
 	function removeChannel(channelId)
 	{
 		var currCard = document.getElementById(channelId);
