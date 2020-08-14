@@ -31,13 +31,24 @@ function checkLatestVideos(channelID) {
 		},
 		success: function(data){
 			if (data.items.length > 0) {
+				var trailers = ["trailer", "teaser", "first look"]; //subject to more, and in future ML model to determine keywords that represent trailer
 				var i;
 				for (i = 0; i < data.items.length; i++) {
-					var time = decodeHTMLEntities(data.items[i].snippet.publishedAt);
+					var snip = data.items[i].snippet; 
+					var time = decodeHTMLEntities(snip.publishedAt);
 					var date = new Date(time);
 					var currentDate = new Date();
 					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
 					if (secondsDifference < 60) { // TODO: decide a margin period
+						var title = snip.title.toLowerCase();
+						for(j = 0; j < trailers.length; j++)
+						{
+							if(title.contains(curr))
+							{
+
+							}
+						}
+						//if title.lowercase.contains [trailers word], send email with that info
 						chrome.storage.sync.get("email", function(result) {
 							sendEmail("Hello World!", result.email);
 						});
