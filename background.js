@@ -17,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function() {
 	  chrome.storage.sync.set({"snippets": snippetArray});
   });
 
-function checkLatestVideos(channelID) {
+function checkLatestVideos(channelID,channelTitle) {
 	$.ajax({
 		type: 'GET',
 		url: 'https://www.googleapis.com/youtube/v3/search',
@@ -33,6 +33,7 @@ function checkLatestVideos(channelID) {
 			if (data.items.length > 0) {
 				var trailers = ["trailer", "teaser", "first look"]; //subject to more, and in future ML model to determine keywords that represent trailer
 				var i;
+				var curr;
 				for (i = 0; i < data.items.length; i++) {
 					var snip = data.items[i].snippet; 
 					var time = decodeHTMLEntities(snip.publishedAt);
@@ -43,15 +44,16 @@ function checkLatestVideos(channelID) {
 						var title = snip.title.toLowerCase();
 						for(j = 0; j < trailers.length; j++)
 						{
+							curr = trailers[j];
 							if(title.contains(curr))
 							{
-
+								//if title.lowercase.contains [trailers word], send email with that info
+								chrome.storage.sync.get("email", function(result) {
+									sendEmail("A new trailer has been posted on " + channelTitle + "! Check it out here: www.youtube.com/watch?v=" + data.items[i].videoId, result.email);
+								});
 							}
 						}
-						//if title.lowercase.contains [trailers word], send email with that info
-						chrome.storage.sync.get("email", function(result) {
-							sendEmail("Hello World!", result.email);
-						});
+
 					}
 				}
 			}
@@ -87,7 +89,7 @@ setInterval(function() {
 			var i;
 			var snippet = result.snippets;
 			for (i = 0; i < snippet.length; i++) {
-				checkLatestVideos(snippet[i].channelID);
+				checkLatestVideos(snippet[i].channelID,snippet[i].title);
 			}
 		}
 	});
