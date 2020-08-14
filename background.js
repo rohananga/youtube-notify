@@ -17,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function() {
 	  chrome.storage.sync.set({"snippets": snippetArray});
   });
 
-function checkLastestVideos(channelID) {
+function checkLatestVideos(channelID) {
 	$.ajax({
 		type: 'GET',
 		url: 'https://www.googleapis.com/youtube/v3/search',
@@ -30,16 +30,20 @@ function checkLastestVideos(channelID) {
 			order: 'date',
 		},
 		success: function(data){
-			var time = decodeHTMLEntities(data.items[0].snippet.publishedAt);
-			var date = new Date(time);
-			var currentDate = new Date();
-			var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-			if (secondsDifference < 60) { // TODO: decide a margin period
-
+			if (data.items.length > 0) {
+				var i;
+				for (i = 0; i < data.items.length; i++) {
+					var time = decodeHTMLEntities(data.items[i].snippet.publishedAt);
+					var date = new Date(time);
+					var currentDate = new Date();
+					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
+					if (secondsDifference < 60) { // TODO: decide a margin period
+						chrome.storage.sync.get("email", function(result) {
+							sendEmail("Hello World!", result.email);
+						});
+					}
+				}
 			}
-			chrome.storage.sync.get("email", function(result) {
-				sendEmail("Hello World!", result.email);
-			});
 		},
 		error: function(response){
 			console.log("Request Failed");
@@ -63,8 +67,20 @@ function decodeHTMLEntities(text) {
 	var textArea = document.createElement('textarea');
 	textArea.innerHTML = text;
 	return textArea.value;
-  }
+}
 
+
+setInterval(function() {
+	chrome.storage.sync.get("snippets", function(result){
+		if (result.snippets.length > 0) {
+			var i;
+			var snippet = result.snippets;
+			for (i = 0; i < snippet.length; i++) {
+				checkLatestVideos(snippet[i].channelID);
+			}
+		}
+	});
+}, 60000);
 
 var oldTime = new Date();
 //getLatestVideoTimes("UCshoKvlZGZ20rVgazZp5vnQ");
