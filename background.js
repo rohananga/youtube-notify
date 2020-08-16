@@ -40,7 +40,7 @@ function checkLatestVideos(channelID) {
 					var date = new Date(time);
 					var currentDate = new Date();
 					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-					if (secondsDifference < 60) { // TODO: decide a margin period
+					if (secondsDifference < 432000) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
 						var tempId = data.items[i].id.videoId;
 						//if (title == "optical illusions in minecraft")
