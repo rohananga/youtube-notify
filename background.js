@@ -17,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function() {
 	  chrome.storage.sync.set({"snippets": snippetArray});
   });
 
-function checkLatestVideos(channelID,channelTitle) {
+function checkLatestVideos(channelID) {
 	$.ajax({
 		type: 'GET',
 		url: 'https://www.googleapis.com/youtube/v3/search',
@@ -40,21 +40,23 @@ function checkLatestVideos(channelID,channelTitle) {
 					var date = new Date(time);
 					var currentDate = new Date();
 					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-					if (secondsDifference < 60) { // TODO: decide a margin period
+					//if (secondsDifference < 60) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
 						for(j = 0; j < trailers.length; j++)
 						{
 							curr = trailers[j];
-							if(title.contains(curr))
+							alert(data.items[i].id.videoId);
+							if (title == "optical illusions in minecraft")
+							//if(title.contains(curr))
 							{
 								//if title.lowercase.contains [trailers word], send email with that info
 								chrome.storage.sync.get("email", function(result) {
-									sendEmail("A new trailer has been posted on " + channelTitle + "! Check it out here: www.youtube.com/watch?v=" + data.items[i].videoId, result.email);
+									sendEmail("A new trailer has been posted on " + snip.channelTitle + "! Check it out here: www.youtube.com/watch?v=" + data.items[i].id.videoId, result.email);
 								});
 							}
 						}
 
-					}
+					//}
 				}
 			}
 		},
@@ -89,11 +91,11 @@ setInterval(function() {
 			var i;
 			var snippet = result.snippets;
 			for (i = 0; i < snippet.length; i++) {
-				checkLatestVideos(snippet[i].channelID,snippet[i].title);
+				checkLatestVideos(snippet[i].channelId);
 			}
 		}
 	});
-}, 60000);
+}, 6000);
 
 var oldTime = new Date();
 //getLatestVideoTimes("UCshoKvlZGZ20rVgazZp5vnQ");
