@@ -31,7 +31,7 @@ function checkLatestVideos(channelID) {
 		},
 		success: function(data){
 			if (data.items.length > 0) {
-				var trailers = ["trailer", "teaser", "first look"]; //subject to more, and in future ML model to determine keywords that represent trailer
+				var trailers = ["trailer", "teaser", "first look", "tv spot", "preview", "sneak peak"]; //subject to more, and in future ML model to determine keywords that represent trailer
 				var i;
 				var curr;
 				for (i = 0; i < data.items.length; i++) {
@@ -40,23 +40,24 @@ function checkLatestVideos(channelID) {
 					var date = new Date(time);
 					var currentDate = new Date();
 					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-					//if (secondsDifference < 60) { // TODO: decide a margin period
+					if (secondsDifference < 60) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
 						for(j = 0; j < trailers.length; j++)
 						{
 							curr = trailers[j];
-							alert(data.items[i].id.videoId);
-							if (title == "optical illusions in minecraft")
-							//if(title.contains(curr))
+							var tempId = data.items[i].id.videoId;
+							//if (title == "optical illusions in minecraft")
+							if(title.contains(curr))
 							{
+								//alert(data.items[i].id);
 								//if title.lowercase.contains [trailers word], send email with that info
 								chrome.storage.sync.get("email", function(result) {
-									sendEmail("A new trailer has been posted on " + snip.channelTitle + "! Check it out here: www.youtube.com/watch?v=" + data.items[i].id.videoId, result.email);
+									sendEmail("A new trailer has been posted on " + snip.channelTitle + "! Check it out here: www.youtube.com/watch?v=" + tempId, result.email);
 								});
 							}
 						}
 
-					//}
+					}
 				}
 			}
 		},
