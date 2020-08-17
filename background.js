@@ -40,7 +40,7 @@ function checkLatestVideos(channelID) {
 					var date = new Date(time);
 					var currentDate = new Date();
 					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-					if (secondsDifference < 432000) { // TODO: decide a margin period
+					if (secondsDifference < 10800) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
 						var tempId = data.items[i].id.videoId;
 						//if (title == "optical illusions in minecraft")
@@ -81,7 +81,7 @@ function checkIfTrailer(title) {
 	var trailers = ["trailer", "teaser", "first look", "tv spot", "preview", "sneak peak"];
 	var i;
 	for (i = 0; i < trailers.length; i++) {
-		if (title.contains(trailers[i])) {
+		if (title.includes(trailers[i])) {
 			return true;
 		}
 	}
