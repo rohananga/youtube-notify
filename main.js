@@ -59,16 +59,13 @@ async function getChannels(username) {
 						document.getElementById('addButton#' + (i + 1)).addEventListener('click', function() {
 							newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
 							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
-							//addElement('Channel'+items[i].snippet.channelId,'p','channelTitle'+ items[i].snippet.channelId,rowParaHtml);
-							//var currCard = document.getElementById('channel#'+items[i].snippet.channelId);
-							//var currTitle = document.getElementById('rowChannel'+i);
-							//currCard.style.display = 'block';
-							//currTitle.style.display = 'block';
-							//document.getElementById('para_channel'+items[i].snippet.channelId).innerHTML = ""+items[i].snippet.title;
-							//Note to Amar: I also tried using addElement method for the paragraph, adding to element w/ id = "row" + i, same result
-							chrome.storage.sync.get('snippets', function(result) {
-								result.snippets.push(items[i].snippet);
-								chrome.storage.sync.set({"snippets": result.snippets});
+
+							chrome.storage.sync.get('snippets', function(result) { //Look into if includes() is fine
+								if(!result.snippets.includes(items[i].snippet))
+								{
+									result.snippets.push(items[i].snippet);
+									chrome.storage.sync.set({"snippets": result.snippets});
+								}
 							});
 							removeElement('result#' + (i + 1));
 						});
@@ -209,6 +206,12 @@ chrome.storage.sync.get("snippets", function(result) {
 		for (i = 0; i < snippet.length; i++) {
 			var newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+snippet[i].channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + snippet[i].thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+snippet[i].title+'</p></div></div>';
 			addElement('channelCollapse','div','channel#'+snippet[i].channelId,newCardHtml);
+			//minusButton[i].addEventListener
+				// i == 3 , change result.snippets, splice
+				// snippet = snippet.splice(i,1)
+				// shifting
+
+				//end: result.snippets = snippet
 		}
 	}
 });
