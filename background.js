@@ -44,8 +44,7 @@ function checkLatestVideos(channelID) {
 						var title = snip.title.toLowerCase();
 						var tempId = data.items[i].id.videoId;
 						//if (title == "optical illusions in minecraft")
-						if(checkIfTrailer(title))
-						{
+						if(checkIfTrailer(title)) {
 							chrome.storage.sync.get("email", function(result) {
 								sendEmail("A new trailer has been posted on " + snip.channelTitle + "! Check it out here: www.youtube.com/watch?v=" + tempId, result.email);
 							});
@@ -78,6 +77,16 @@ function decodeHTMLEntities(text) {
 	return textArea.value;
 }
 
+function checkIfTrailer(title) {
+	var trailers = ["trailer", "teaser", "first look", "tv spot", "preview", "sneak peak"];
+	var i;
+	for (i = 0; i < trailers.length; i++) {
+		if (title.contains(trailers[i])) {
+			return true;
+		}
+	}
+	return false;
+}
 
 setInterval(function() {
 	chrome.storage.sync.get("snippets", function(result){
@@ -90,28 +99,3 @@ setInterval(function() {
 		}
 	});
 }, 6000);
-
-function checkIfTrailer(title) {
-	var trailers = ["trailer", "teaser", "first look", "tv spot", "preview", "sneak peak"];
-	var i;
-	for (i = 0; i < trailers.length; i++) {
-		if (title.contains(trailers[i])) {
-			return true;
-		}
-	}
-	return false;
-}
-var oldTime = new Date();
-//getLatestVideoTimes("UCshoKvlZGZ20rVgazZp5vnQ");
-var newTime = new Date();
-//alert(Math.abs(oldTime.getTime() - newTime.getTime()) / 1000);
-
-/*x = 1;
-while (x == 1) {
-	var date = new Date();
-	if (date.getMinutes() >= 19) {
-		alert(date.getMinutes());
-		break;
-	}
-	//x++;
-}*/
