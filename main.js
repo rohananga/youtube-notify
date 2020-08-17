@@ -61,8 +61,7 @@ async function getChannels(username) {
 							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
 
 							chrome.storage.sync.get('snippets', function(result) { //Look into if includes() is fine
-								if(!result.snippets.includes(items[i].snippet))
-								{
+								if(!result.snippets.some(item => _.isEqual(item, items[i].snippet))) {
 									result.snippets.push(items[i].snippet);
 									chrome.storage.sync.set({"snippets": result.snippets});
 								}
