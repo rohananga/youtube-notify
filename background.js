@@ -39,8 +39,8 @@ function checkLatestVideos(channelID) {
 					var time = decodeHTMLEntities(snip.publishedAt);
 					var date = new Date(time);
 					var currentDate = new Date();
-					var secondsDifference = Math.abs(date.getTime() - currentDate.getTime()) / 1000;
-					if (secondsDifference < 10800) { // TODO: decide a margin period
+					var minutesDifference = Math.floor(Math.abs(date.getTime() - currentDate.getTime()) / 60000);
+					if (minutesDifference < 30) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
 						var tempId = data.items[i].id.videoId;
 						//if (title == "optical illusions in minecraft")
@@ -98,4 +98,4 @@ setInterval(function() {
 			}
 		}
 	});
-}, 6000);
+}, 1800000);
