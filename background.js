@@ -13,8 +13,8 @@ chrome.runtime.onInstalled.addListener(function() {
 		}]);
 	  });
 	  var snippetArray = [];
-	  var playListArray = ["UUshoKvlZGZ20rVgazZp5vnQ"];
-	  chrome.storage.sync.set({"email": "hummerrocket@gmail.com"});
+	  var playListArray = [];
+	  chrome.storage.sync.set({"email": ""});
 	  chrome.storage.sync.set({"snippets": snippetArray});
 	  chrome.storage.sync.set({"playlistIds": playListArray});
   });
