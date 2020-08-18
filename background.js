@@ -39,8 +39,8 @@ function checkLatestVideos(currentPlaylistId) {
 					var time = decodeHTMLEntities(snip.publishedAt);
 					var date = new Date(time);
 					var currentDate = new Date();
-					var minutesDifference = Math.floor(Math.abs(date.getTime() - currentDate.getTime()) / 60000);
-					if (minutesDifference < 30) { // TODO: decide a margin period
+					var secondsDifference = Math.floor(Math.abs(date.getTime() - currentDate.getTime()) / 1000);
+					if (secondsDifference <= 60) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
 						//if (title == "optical illusions in minecraft") {
 						if(checkIfTrailer(title)) {
@@ -94,18 +94,8 @@ setInterval(function() {
 			var i;
 			var playlistIds = result.playlistIds;
 			for (i = 0; i < playlistIds.length; i++) {
-				//alert(playlistIds[i]);
 				checkLatestVideos(playlistIds[i]);
 			}
 		}
 	});
-	/*chrome.storage.sync.get("snippets", function(result){
-		if (result.snippets.length > 0) {
-			var i;
-			var snippet = result.snippets;
-			for (i = 0; i < snippet.length; i++) {
-				checkLatestVideos(snippet[i].channelId);
-			}
-		}
-	});*/
-}, 6000);
+}, 60000);
