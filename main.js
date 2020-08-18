@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									result.snippets.push(items[i].snippet);
 									chrome.storage.sync.set({"snippets": result.snippets});
 
-									newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
+									newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton'+items[i].snippet.channelId+'" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
 									addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
 									getPlaylistId(items[i].snippet.channelId);
 								}
@@ -211,7 +211,7 @@ function decodeHTMLEntities(text) {
 }
 
 function emailIsValid (email) {
-return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
  /* (async () => {
 	const result = await getChannel("Netflix");
@@ -231,14 +231,28 @@ chrome.storage.sync.get("snippets", function(result) {
 		var i;
 		var snippet = result.snippets;
 		for (i = 0; i < snippet.length; i++) {
-			var newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+snippet[i].channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + snippet[i].thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+snippet[i].title+'</p></div></div>';
+			var newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+snippet[i].channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton'+snippet[i].channelId+'" style="margin:5px;">-</button>'+'<img src=' + snippet[i].thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+snippet[i].title+'</p></div></div>';
 			addElement('channelCollapse','div','channel#'+snippet[i].channelId,newCardHtml);
+			document.getElementById("minusButton"+snippet[i].channelId).addEventListener('click', function() {
+				removeElement('channel#'+snippet[i].channelId);
+				snippet = snippet.splice(i,1);
+				chrome.storage.sync.get("playlistIds", function(arr) {
+					var playlistIds = arr.playlistIds;
+					playlistIds = playlistIds.splice(i, 1);
+					chrome.storage.sync.set({"playlistIds": playlistIds});
+				});
+			});
 			//minusButton[i].addEventListener
-				// i == 3 , change result.snippets, splice
+				/* i == 3 , change result.snippets, splice
 				// snippet = snippet.splice(i,1)
-				// shifting
+				// also splice from the playlistIds array
+				chrome.storage.sync.get("playlistIds", function(result) {
+
+				});
+				// shifting*/
 
 				//end: result.snippets = snippet
 		}
+		chrome.storage.sync.set({"snippets": snippet});
 	}
 });
