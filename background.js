@@ -13,21 +13,21 @@ chrome.runtime.onInstalled.addListener(function() {
 		}]);
 	  });
 	  var snippetArray = [];
-	  chrome.storage.sync.set({"email": ""});
+	  var playListArray = ["UUshoKvlZGZ20rVgazZp5vnQ"];
+	  chrome.storage.sync.set({"email": "hummerrocket@gmail.com"});
 	  chrome.storage.sync.set({"snippets": snippetArray});
+	  chrome.storage.sync.set({"playlistIds": playListArray});
   });
 
-function checkLatestVideos(channelID) {
+function checkLatestVideos(currentPlaylistId) {
 	$.ajax({
 		type: 'GET',
-		url: 'https://www.googleapis.com/youtube/v3/search',
+		url: 'https://www.googleapis.com/youtube/v3/playlistItems',
 		data: {
 			key: 'AIzaSyAHUITXF9oo2Ed24HO1IrDRtYqNLv15_b8',
-			channelId: channelID,
+			playlistId: currentPlaylistId,
 			part: 'snippet',
 			maxResults: 5,
-			type: 'video',
-			order: 'date',
 		},
 		success: function(data){
 			if (data.items.length > 0) {
@@ -42,9 +42,9 @@ function checkLatestVideos(channelID) {
 					var minutesDifference = Math.floor(Math.abs(date.getTime() - currentDate.getTime()) / 60000);
 					if (minutesDifference < 30) { // TODO: decide a margin period
 						var title = snip.title.toLowerCase();
-						var tempId = data.items[i].id.videoId;
-						//if (title == "optical illusions in minecraft")
+						//if (title == "optical illusions in minecraft") {
 						if(checkIfTrailer(title)) {
+							var tempId = snip.resourceId.videoId;
 							chrome.storage.sync.get("email", function(result) {
 								sendEmail("A new trailer has been posted on " + snip.channelTitle + "! Check it out here: www.youtube.com/watch?v=" + tempId, result.email);
 							});
@@ -89,7 +89,17 @@ function checkIfTrailer(title) {
 }
 
 setInterval(function() {
-	chrome.storage.sync.get("snippets", function(result){
+	chrome.storage.sync.get("playlistIds", function(result){
+		if (result.playlistIds.length > 0) {
+			var i;
+			var playlistIds = result.playlistIds;
+			for (i = 0; i < playlistIds.length; i++) {
+				//alert(playlistIds[i]);
+				checkLatestVideos(playlistIds[i]);
+			}
+		}
+	});
+	/*chrome.storage.sync.get("snippets", function(result){
 		if (result.snippets.length > 0) {
 			var i;
 			var snippet = result.snippets;
@@ -97,5 +107,5 @@ setInterval(function() {
 				checkLatestVideos(snippet[i].channelId);
 			}
 		}
-	});
-}, 1800000);
+	});*/
+}, 6000);

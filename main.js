@@ -21,7 +21,32 @@ async function getChannels(username) {
 	}
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+function getPlaylistId(channelId) {
+	$.ajax({
+			type: 'GET',
+			url: 'https://www.googleapis.com/youtube/v3/channels',
+			data: {
+				key: 'AIzaSyAHUITXF9oo2Ed24HO1IrDRtYqNLv15_b8',
+				id: channelId,
+				part: 'contentDetails',
+				datatype: 'json',
+		},
+		success: function(data){
+			chrome.storage.sync.get('playlistIds', function(result) {
+				if (!result.playlistIds.includes(data.items[0].contentDetails.relatedPlaylists.uploads)) {
+					//alert(data.items[0].contentDetails.relatedPlaylists.uploads);
+					result.playlistIds.push(data.items[0].contentDetails.relatedPlaylists.uploads);
+					chrome.storage.sync.set({"playlistIds": result.playlistIds});
+				}
+			});
+		}, 
+		error: function(response){
+			console.log("Request Failed");
+		}
+	});
+}
+
+document.addEventListener('DOMContentLoaded', function() {
 	var edit = document.getElementById('editButton'),
 		cancel = document.getElementById('cancelButton'),
 		minusButton = document.getElementById('minusButton1'),
@@ -57,17 +82,19 @@ async function getChannels(username) {
 							'</div>';
 						addElement('results','div','result#' + (i + 1), html);	
 						document.getElementById('addButton#' + (i + 1)).addEventListener('click', function() {
-							newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
-							addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
-
 							chrome.storage.sync.get('snippets', function(result) { //Look into if includes() is fine
 								if(!result.snippets.some(item => _.isEqual(item, items[i].snippet))) {
 									result.snippets.push(items[i].snippet);
 									chrome.storage.sync.set({"snippets": result.snippets});
+
+									newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
+									addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
+									getPlaylistId(items[i].snippet.channelId);
 								}
 							});
 							removeElement('result#' + (i + 1));
 						});
+						
 					} 
 				})
 			}
@@ -159,7 +186,8 @@ async function getChannels(username) {
 			}
 		}
 	});
-  });
+});
+
 function addElement(parentId, elementTag, elementId, html) {
 	console.log(parentId);
     // Adds an element to the document
