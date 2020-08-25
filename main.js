@@ -91,22 +91,23 @@ document.addEventListener('DOMContentLoaded', function() {
 									newCardHtml ='<div class="card card-body container-fluid" id = "Channel'+items[i].snippet.channelId+'"><div class = "row"><button type="button" class="btn btn-primary mb-2" id="minusButton'+items[i].snippet.channelId+'" style="margin:5px;">-</button>'+'<img src=' + items[i].snippet.thumbnails.medium.url + ' alt="" width = "80px" height = "80px">'+'<p style="font-size:25px">'+items[i].snippet.title+'</p></div></div>';
 									addElement('channelCollapse','div','channel#'+items[i].snippet.channelId,newCardHtml);
 									getPlaylistId(items[i].snippet.channelId);
-									document.getElementById('minusButton'+items[i].snippet.channelId).addEventListener('click', function() {
+									var tempI = i;
+									document.getElementById('minusButton'+items[tempI].snippet.channelId).addEventListener('click', function() {
 										//alert('channel#'+items[i].snippet.channelId);
-										removeElement('channel#'+items[i].snippet.channelId);
-										var index = res.indexOf(items[i].snippet);
-										if (index >= 0) {
-											res.splice(index,1);
-											chrome.storage.sync.set({"snippets": res});
-										}
-										chrome.storage.sync.get("playlistIds", function(arr) {
-											var playlistIds = arr.playlistIds;
-											if (index >= 0) {
-												playlistIds.splice(index, 1);
+										removeElement('channel#'+items[tempI].snippet.channelId);
+										var tempChannelId = items[tempI].snippet.channelId;
+
+										chrome.storage.sync.get('snippets', function(result) {
+											var res2 = result.snippets;
+											var j = 0;
+											for (j = 0; j < res2.length; j++) {
+												if (res2[j].channelId == tempChannelId) {
+													res2.splice(j,1);
+													break;
+												}
 											}
-											chrome.storage.sync.set({"playlistIds": playlistIds});
+											chrome.storage.sync.set({"snippets": res2});
 										});
-										//chrome.storage.sync.set({"snippets": result.snippets});
 									});
 								}
 							});
@@ -231,10 +232,6 @@ function decodeHTMLEntities(text) {
 function emailIsValid (email) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
- /* (async () => {
-	const result = await getChannel("Netflix");
-	//alert(result.items[0].snippet.title);
-})()*/
 
 function getRidofChannel(channelId, i, snippet) {
 	removeElement('channel#'+channelId);
@@ -265,27 +262,18 @@ chrome.storage.sync.get("snippets", function(result) {
 			addElement('channelCollapse','div','channel#'+snippet[i].channelId,newCardHtml);
 			var firstTemp = i;
 			var channel = snippet[i].channelId;
-			//alert(firstTemp);
-			/*document.getElementById('minusButton'+channel).addEventListener('click', function() {
-				//alert('channel#'+items[i].snippet.channelId);
-				//alert(firstTemp);
-				getRidofChannel(channel, firstTemp, snippet);
-			});*/
-			//alert(snippet[firstTemp]);
+
 			document.getElementById('minusButton'+channel).addEventListener('click', function() {
-				//alert(snippet[firstTemp]);
 				removeElement('channel#'+snippet[firstTemp].channelId);
-				var index = snippet.indexOf(snippet[firstTemp]);
-				snippet.splice(index,1);
+				var j = 0;
+				for (j = 0; j < snippet.length; j++) {
+					if (snippet[j].channelId == channel) {
+						snippet.splice(j,1);
+						break;
+					}
+				}
 				chrome.storage.sync.set({"snippets": snippet});
-				var secondTemp = firstTemp;
-				chrome.storage.sync.get("playlistIds", function(arr) {
-					var playlistIds = arr.playlistIds;
-					playlistIds.splice(index, 1);
-					chrome.storage.sync.set({"playlistIds": playlistIds});
-				});
 			});
 		});
-		//chrome.storage.sync.set({"snippets": snippet});
 	}
 });

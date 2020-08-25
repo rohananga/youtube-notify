@@ -85,7 +85,7 @@ function checkIfTrailer(title) {
 	return false;
 }
 
-setInterval(function() {
+/*setInterval(function() {
 	chrome.storage.sync.get("playlistIds", function(result){
 		if (result.playlistIds.length > 0) {
 			var i;
@@ -95,4 +95,4 @@ setInterval(function() {
 			}
 		}
 	});
-}, 120000);
+}, 120000);*/
